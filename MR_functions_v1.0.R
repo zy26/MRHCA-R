@@ -1,4 +1,4 @@
-MRHCA <- function(cor_M, MR_E, step_size0 = 50, p_sig = 0.05, Hit_score_cutoff = 100) {
+MRHCA <- function(cor_M, MR_E, step_size0 = 50, p_sig0 = 0.05, Hit_score_cutoff = 100) {
     cor_c <- cor_M
     diag(cor_c) <- 0
     cor_c <- abs(cor_c)
@@ -216,6 +216,7 @@ MRHCA_small_hub_identificaiton <- function(MRHCA_output, data, MR_E) {
 
 
 Empirical_null_distribution_MR_F <- function(data, K = 1000, Rounds = 1000) {
+	M<-K
     N <- nrow(data)
     aaa <- runif(N * Rounds, 0, 1)
     bbb1 <- rep(0, length(aaa))
@@ -243,13 +244,11 @@ Compute_rank_index <- function(data, K) {
     return(Rank_index)
 }
 
-MR_E <- Empirical_null_distribution_MR_F(Rank_index, K, Rounds = 1000)
-
 MRHCA_fast_version <- function(Rank_index, MR_E, K = 500, step_size0 = 50, p_sig0 = 0.05, Hit_score_cutoff = 100, TN_p = 1) {
     sig_N0 <- floor(K * 0.75)
     hub_sig_cut0 <- Hit_score_cutoff
     MR_id <- 1:nrow(Rank_index)
-    if (TN < 1) {
+    if (TN_p < 1) {
         MR_id <- names(sort(table(Rank_index), decreasing = T))
         MR_id <- as.numeric(MR_id)
     }
