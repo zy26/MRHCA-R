@@ -8,7 +8,7 @@ for (i in 1:nrow(Ecoli_RNASeq_top1000)) {
     cor_cc[i] <- 0
     Rank_index <- rbind(Rank_index, order(-abs(cor_cc))[1:K])
 }
-rownames(Rank_index) <- rownames(data)
+rownames(Rank_index) <- rownames(Ecoli_RNASeq_top1000)
 #Or use the following function for compute rank_index for Pearson Correlation
 Rank_index <- Compute_rank_index(Ecoli_RNASeq_top1000, K = 500)
 
